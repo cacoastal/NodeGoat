@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1 # Changed from 2
 jobs:
   build:
     docker:
@@ -125,3 +125,12 @@ workflows:
           requires:
             - greenlight_scan
 
+# ----ROAN ADDED THE FOLLOWING
+orbs: # adds orbs to your configuration
+  jira: circleci/jira@1.3.1 # invokes the Jira orb, making its commands accessible
+workflows:
+  build:
+    jobs:
+      - build:
+          post-steps:
+            - jira/notify # Runs the Jira's "notify" commands after a build has finished its steps.
